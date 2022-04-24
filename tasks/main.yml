@@ -1,19 +1,24 @@
 ---
 
-- name: Add the spotify repository key
+- name: Remove the spotify repository key
   ansible.builtin.apt_key:
     url: https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg
-    state: present
+    state: absent
 
-- name: Add spotify repository
+- name: Remove spotify repository
   ansible.builtin.apt_repository:
     repo: "deb http://repository.spotify.com stable non-free"
-    state: present
+    state: absent
     filename: spotify
 
-- name: Install spotify
+- name: Remove spotify package
   ansible.builtin.apt:
     name: spotify-client
     update_cache: yes
+    state: absent
+
+- name: Install spotify snap
+  community.general.snap:
+    name: spotify
     state: present
 
