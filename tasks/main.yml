@@ -9,11 +9,10 @@
 - name: Remove spotify package
   ansible.builtin.apt:
     name: spotify-client
-    update_cache: yes
+    update_cache: true
     state: absent
 
 - name: Install spotify snap
   community.general.snap:
     name: spotify
     state: present
-
