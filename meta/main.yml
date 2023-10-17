@@ -50,4 +50,5 @@ galaxy_info:
     - snap
 
 dependencies:
-  - role: community.general.snap
+  []
+  # - role: community.general.snap
