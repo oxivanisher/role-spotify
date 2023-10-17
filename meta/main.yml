@@ -49,5 +49,7 @@ galaxy_info:
     - spotify
     - snap
 
-dependencies:
-  - role: community.general.snap
+dependencies: []
+
+collections:
+  - community.general
