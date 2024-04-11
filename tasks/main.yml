@@ -5,14 +5,20 @@
     repo: "deb http://repository.spotify.com stable non-free"
     state: absent
     filename: spotify
+  become: true
+  become_user: root
 
 - name: Remove spotify package
   ansible.builtin.apt:
     name: spotify-client
     update_cache: true
     state: absent
+  become: true
+  become_user: root
 
 - name: Install spotify snap
   community.general.snap:
     name: spotify
     state: present
+  become: true
+  become_user: root
