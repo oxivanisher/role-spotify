@@ -1,25 +1,42 @@
 ---
 
-- name: Remove spotify repository
-  ansible.builtin.apt_repository:
-    repo: "deb http://repository.spotify.com stable non-free"
-    state: absent
-    filename: spotify
+- name: Check if flatpak is available
+  ansible.builtin.stat:
+    path: /usr/bin/flatpak
+  register: flatpak_executable
+
+- name: Check if snap is available
+  ansible.builtin.stat:
+    path: /usr/bin/snap
+  register: snap_executable
+
+- name: Enable the flathub remote in the system installation
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    enabled: true
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+  when: flatpak_executable.stat.exists
   become: true
   become_user: root
 
-- name: Remove spotify package
-  ansible.builtin.apt:
-    name: spotify-client
-    update_cache: true
-    state: absent
+- name: Install spotify as flatpak
+  community.general.flatpak:
+    name: com.spotify.Client
+    state: present
+    remote: flathub
+  when: flatpak_executable.stat.exists
   become: true
   become_user: root
 
-- name: Install spotify snap
+- name: Install spotify as snap
   community.general.snap:
     name: spotify
     state: present
+    classic: true
+  when:
+    - not flatpak_executable.stat.exists
+    - snap_executable.stat.exists
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
   become_user: root

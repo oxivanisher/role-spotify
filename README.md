@@ -2,7 +2,7 @@ spotify
 =======
 [![Ansible Lint](https://github.com/oxivanisher/role-spotify/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/oxivanisher/role-spotify/actions/workflows/ansible-lint.yml)
 
-This role installs spotify snap package.
+This role installs the Spotify app from flatpak or snap. If both package managers are available, it will prefer flatpak.
 
 Role Variables
 --------------
