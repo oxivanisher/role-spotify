@@ -41,14 +41,15 @@ galaxy_info:
   #   - 7
   #   - 99.99
   platforms:
+    - name: Debian
+      versions:
+        - all
     - name: Ubuntu
       versions:
         - all
 
   galaxy_tags:
     - spotify
+    - flatpak
     - snap
-
-dependencies:
-  []
   # - role: community.general.snap
