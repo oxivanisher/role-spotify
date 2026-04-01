@@ -1,5 +1,4 @@
 ---
-
 - name: Check if flatpak is available
   ansible.builtin.stat:
     path: /usr/bin/flatpak
@@ -18,7 +17,6 @@
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
   when: flatpak_executable.stat.exists
   become: true
-  become_user: root
 
 - name: Install spotify as flatpak
   community.general.flatpak:
@@ -27,7 +25,6 @@
     remote: flathub
   when: flatpak_executable.stat.exists
   become: true
-  become_user: root
 
 - name: Install spotify as snap
   community.general.snap:
@@ -39,4 +36,3 @@
     - snap_executable.stat.exists
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
-  become_user: root
