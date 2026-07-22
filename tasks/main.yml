@@ -2,12 +2,12 @@
 - name: Check if flatpak is available
   ansible.builtin.stat:
     path: /usr/bin/flatpak
-  register: flatpak_executable
+  register: spotify_flatpak_executable
 
 - name: Check if snap is available
   ansible.builtin.stat:
     path: /usr/bin/snap
-  register: snap_executable
+  register: spotify_snap_executable
 
 - name: Enable the flathub remote in the system installation
   community.general.flatpak_remote:
@@ -15,7 +15,7 @@
     state: present
     enabled: true
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-  when: flatpak_executable.stat.exists
+  when: spotify_flatpak_executable.stat.exists
   become: true
 
 - name: Install spotify as flatpak
@@ -23,7 +23,7 @@
     name: com.spotify.Client
     state: present
     remote: flathub
-  when: flatpak_executable.stat.exists
+  when: spotify_flatpak_executable.stat.exists
   become: true
 
 - name: Install spotify as snap
@@ -32,7 +32,7 @@
     state: present
     classic: true
   when:
-    - not flatpak_executable.stat.exists
-    - snap_executable.stat.exists
+    - not spotify_flatpak_executable.stat.exists
+    - spotify_snap_executable.stat.exists
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
